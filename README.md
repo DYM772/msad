@@ -325,6 +325,8 @@ spec:
                   number: 8080
 ```
 
+![ingress](https://github.com/user-attachments/assets/ecb58481-2e1c-4344-802e-231ad2210bb3)
+
 ### CQRS 패턴
 1. 전체 광고 정보 확인
 
@@ -419,8 +421,58 @@ spec:
 
 ## 클라우드 DevOps
 ### Auto Scaling
+1. Auto Scaling 설정
+```
+kubectl autoscale deployment material --cpu-percent=50 --min=1 --max=3
+```
+2. 부하 테스트 실행
+
+![HPA](https://github.com/user-attachments/assets/504f98f0-e5f8-41d4-b660-29ac1f3cecd7)
+
+3. Auto Scaling 실행
+
+![HPA2](https://github.com/user-attachments/assets/09e2f897-2e5a-4af2-8e64-a77554707f66)
+![HPA3](https://github.com/user-attachments/assets/b5d0f3fd-5c15-40d7-9ef3-88514b4a257a)
 
 ### ConfigMap
+1. ConfigMap 생성
+```
+kubectl create configmap my-config --from-literal=class=MSA --from-literal=Lab=ConfigMap
+```
+2. Pod에 ConfigMap 설정
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: material
+  labels:
+    app: material
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: material
+  template:
+    metadata:
+      labels:
+        app: material
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: material
+          image: "user02.azurecr.io/material:latest"
+          ports:
+            - containerPort: 8080
+          env:  //ConfigMap 설정
+            - name: CLASS
+              valueFrom:
+                configMapKeyRef:
+                  name: my-config
+                  key: class
+```
+3. ConfigMap 변수 확인
+
+![CM](https://github.com/user-attachments/assets/b02a55e1-5753-44d7-b444-f87c96b26b6e)
 
 ### PVC
 
