@@ -474,9 +474,21 @@ spec:
 
 ![CM](https://github.com/user-attachments/assets/b02a55e1-5753-44d7-b444-f87c96b26b6e)
 
-### PVC
+### Readiness Probe
+1. yaml 파일에서 Readiness Probe 설정
+```
+          livenessProbe:  //Readiness Probe 설정
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+```
+2. 무정지 배포 확인
 
-### Liveness/Rediness Probe
+![RP](https://github.com/user-attachments/assets/37650ac5-9642-4a9e-91a9-3390479155de)
 
 ### Service Mesh
 - yaml 파일의 label에서 sidecar로 istio를 injection
