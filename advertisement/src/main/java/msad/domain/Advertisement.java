@@ -72,8 +72,8 @@ public class Advertisement {
     }
 
     //<<< Clean Arch / Port Method
-    public static void close(Stoped stoped) throws Exception {
-        Advertisement advertisement = repository().findById(stoped.getAdId()).orElseThrow(() -> new Exception());
+    public static void close(Stopped stopped) throws Exception {
+        Advertisement advertisement = repository().findById(stopped.getAdId()).orElseThrow(() -> new Exception());
         advertisement.setStatus("CLOSED");
         Closed closed = new Closed(advertisement);
         closed.publishAfterCommit();

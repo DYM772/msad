@@ -9,7 +9,7 @@ import msad.infra.AbstractEvent;
 //<<< DDD / Domain Event
 @Data
 @ToString
-public class Stoped extends AbstractEvent {
+public class Stopped extends AbstractEvent {
 
     private Long id;
     private Long adId;
@@ -22,11 +22,11 @@ public class Stoped extends AbstractEvent {
     private String status;
     private String target;
 
-    public Stoped(Delivery aggregate) {
+    public Stopped(Delivery aggregate) {
         super(aggregate);
     }
 
-    public Stoped() {
+    public Stopped() {
         super();
     }
 }

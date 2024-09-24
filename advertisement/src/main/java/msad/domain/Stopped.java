@@ -1,12 +1,13 @@
 package msad.domain;
 
-import java.time.LocalDate;
 import java.util.*;
-import lombok.Data;
+import lombok.*;
+import msad.domain.*;
 import msad.infra.AbstractEvent;
 
 @Data
-public class Stoped extends AbstractEvent {
+@ToString
+public class Stopped extends AbstractEvent {
 
     private Long id;
     private Long adId;

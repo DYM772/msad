@@ -7,7 +7,7 @@ import javax.persistence.*;
 import lombok.Data;
 import msad.DeliveryApplication;
 import msad.domain.Fed;
-import msad.domain.Stoped;
+import msad.domain.Stopped;
 
 @Entity
 @Table(name = "Delivery_table")
@@ -45,9 +45,6 @@ public class Delivery {
 
     @PostUpdate
     public void onPostUpdate() {
-        Stoped stoped = new Stoped(this);
-        stoped.setStatus("STOP");
-        stoped.publishAfterCommit();
     }
 
     public static DeliveryRepository repository() {
@@ -79,6 +76,8 @@ public class Delivery {
     public static void stop(Canceled canceled) {
         Delivery delivery = repository().findByAdId(canceled.getAdId());
         delivery.setStatus("STOP");
+        Stopped stopped = new Stopped(delivery);
+        stopped.publishAfterCommit();
     }
     //>>> Clean Arch / Port Method
 

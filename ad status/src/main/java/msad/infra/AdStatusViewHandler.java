@@ -84,15 +84,15 @@ public class AdStatusViewHandler {
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenStoped_then_UPDATE_3(@Payload Stoped stoped) {
+    public void whenStopped_then_UPDATE_3(@Payload Stopped stopped) {
         try {
-            if (!stoped.validate()) return;
+            if (!stopped.validate()) return;
                 // view 객체 조회
 
-                List<AdStatus> adStatusList = adStatusRepository.findByAdId(stoped.getAdId());
+                List<AdStatus> adStatusList = adStatusRepository.findByAdId(stopped.getAdId());
                 for(AdStatus adStatus : adStatusList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    adStatus.setDeliveryStatus(stoped.getStatus());
+                    adStatus.setDeliveryStatus(stopped.getStatus());
                 // view 레파지 토리에 save
                 adStatusRepository.save(adStatus);
                 }
