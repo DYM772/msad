@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ad status
+  labels:
+    app: ad status
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ad status
+  template:
+    metadata:
+      labels:
+        app: ad status
+    spec:
+      containers:
+        - name: ad status
+          image: "username/ad status:latest"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
