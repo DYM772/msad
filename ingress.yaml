@@ -1,0 +1,84 @@
+apiVersion: networking.k8s.io/v1
+kind: "Ingress"
+metadata: 
+  name: "msad-ingress"
+  namespace: istio-system
+  annotations: 
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec: 
+  ingressClassName: nginx
+  rules: 
+    - host: ""
+      http: 
+        paths:
+          - path: /materials
+            pathType: Prefix
+            backend: 
+              service:
+                name: material
+                port:
+                  number: 8080
+          - path: /advertisements
+            pathType: Prefix
+            backend: 
+              service:
+                name: advertisement
+                port:
+                  number: 8080
+          - path: /deliveries
+            pathType: Prefix
+            backend: 
+              service:
+                name: delivery
+                port:
+                  number: 8080
+          - path: /inventories
+            pathType: Prefix
+            backend: 
+              service:
+                name: inventory
+                port:
+                  number: 8080
+          - path: /adStatuses
+            pathType: Prefix
+            backend: 
+              service:
+                name: ad-status
+                port:
+                  number: 8080
+          - path: /jaeger
+            pathType: Prefix
+            backend: 
+              service:
+                name: tracing
+                port:
+                  number: 80
+          - path: /kiali
+            pathType: Prefix
+            backend: 
+              service:
+                name: kiali
+                port:
+                  number: 20001
+          - path: /grafana
+            pathType: Prefix
+            backend: 
+              service:
+                name: grafana
+                port:
+                  number: 3000
+          - path: /prometheus
+            pathType: Prefix
+            backend: 
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+          - path: /loki
+            pathType: Prefix
+            backend: 
+              service:
+                name: loki
+                port:
+                  number: 3100

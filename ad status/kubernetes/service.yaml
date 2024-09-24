@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ad status
+  name: ad-status
   labels:
-    app: ad status
+    app: ad-status
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: ad status
+    app: ad-status

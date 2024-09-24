@@ -1,22 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ad_status
+  name: ad-status
   labels:
-    app: ad_status
+    app: ad-status
+    sidecar.istio.io/inject: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ad_status
+      app: ad-status
   template:
     metadata:
       labels:
-        app: ad_status
+        app: ad-status
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
-        - name: ad_status
-          image: "user02.azurecr.io/ad_status:latest"
+        - name: ad-status
+          image: "user02.azurecr.io/ad-status:latest"
           ports:
             - containerPort: 8080
           resources:
