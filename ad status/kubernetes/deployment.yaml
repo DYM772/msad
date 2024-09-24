@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ad status
+  name: ad_status
   labels:
-    app: ad status
+    app: ad_status
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ad status
+      app: ad_status
   template:
     metadata:
       labels:
-        app: ad status
+        app: ad_status
     spec:
       containers:
-        - name: ad status
-          image: "username/ad status:latest"
+        - name: ad_status
+          image: "user02.azurecr.io/ad_status:latest"
           ports:
             - containerPort: 8080
           readinessProbe:
             httpGet:
               path: '/actuator/health'
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 10

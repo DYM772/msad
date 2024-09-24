@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: advertisement
-          image: "username/advertisement:latest"
+          image: "user02.azurecr.io/advertisement:latest"
           ports:
             - containerPort: 8080
           readinessProbe:
             httpGet:
               path: '/actuator/health'
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 10
