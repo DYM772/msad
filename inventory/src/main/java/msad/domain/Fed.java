@@ -16,7 +16,7 @@ public class Fed extends AbstractEvent {
     private String materialUrl;
     private Date startDate;
     private Date endDate;
-    private Long impressions;
+    private Long targetImpressions;
     private String status;
     private String target;
 }

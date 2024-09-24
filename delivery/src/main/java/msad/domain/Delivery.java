@@ -29,6 +29,8 @@ public class Delivery {
 
     private String target;
 
+    private Long targetImpressions;
+
     private Date startDate;
 
     private Date endDate;
@@ -44,6 +46,7 @@ public class Delivery {
     @PostUpdate
     public void onPostUpdate() {
         Stoped stoped = new Stoped(this);
+        stoped.setStatus("STOP");
         stoped.publishAfterCommit();
     }
 
@@ -58,47 +61,24 @@ public class Delivery {
     public static void feed(Approved approved) {
         //implement business logic here:
 
-        /** Example 1:  new item 
         Delivery delivery = new Delivery();
+        delivery.setAdId(approved.getId());
+        delivery.setMaterialId(approved.getMaterialId());
+        delivery.setMaterialName(approved.getMaterialName());
+        delivery.setMaterialUrl(approved.getMaterialUrl());
+        delivery.setTarget(approved.getTarget());
+        delivery.setTargetImpressions(approved.getTargetImpressions());
+        delivery.setStartDate(approved.getStartDate());
+        delivery.setEndDate(approved.getEndDate());
+        delivery.setStatus("ACTIVE");
         repository().save(delivery);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(approved.get???()).ifPresent(delivery->{
-            
-            delivery // do something
-            repository().save(delivery);
-
-
-         });
-        */
-
     }
 
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void stop(Canceled canceled) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Delivery delivery = new Delivery();
-        repository().save(delivery);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(canceled.get???()).ifPresent(delivery->{
-            
-            delivery // do something
-            repository().save(delivery);
-
-
-         });
-        */
-
+        Delivery delivery = repository().findByAdId(canceled.getAdId());
+        delivery.setStatus("STOP");
     }
     //>>> Clean Arch / Port Method
 

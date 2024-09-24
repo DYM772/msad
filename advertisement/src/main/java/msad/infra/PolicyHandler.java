@@ -27,7 +27,7 @@ public class PolicyHandler {
         value = KafkaProcessor.INPUT,
         condition = "headers['type']=='Stoped'"
     )
-    public void wheneverStoped_Close(@Payload Stoped stoped) {
+    public void wheneverStoped_Close(@Payload Stoped stoped) throws Exception {
         Stoped event = stoped;
         System.out.println("\n\n##### listener Close : " + stoped + "\n\n");
 

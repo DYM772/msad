@@ -52,9 +52,6 @@ public class Advertisement {
     public void onPostUpdate() {
         Approved approved = new Approved(this);
         approved.publishAfterCommit();
-
-        Closed closed = new Closed(this);
-        closed.publishAfterCommit();
     }
 
     public static AdvertisementRepository repository() {
@@ -75,26 +72,11 @@ public class Advertisement {
     }
 
     //<<< Clean Arch / Port Method
-    public static void close(Stoped stoped) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Advertisement advertisement = new Advertisement();
-        repository().save(advertisement);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(stoped.get???()).ifPresent(advertisement->{
-            
-            advertisement // do something
-            repository().save(advertisement);
-
-
-         });
-        */
-
+    public static void close(Stoped stoped) throws Exception {
+        Advertisement advertisement = repository().findById(stoped.getAdId()).orElseThrow(() -> new Exception());
+        advertisement.setStatus("CLOSED");
+        Closed closed = new Closed(advertisement);
+        closed.publishAfterCommit();
     }
     //>>> Clean Arch / Port Method
 

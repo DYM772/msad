@@ -1,32 +1,23 @@
 package msad.domain;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import java.util.*;
 import lombok.Data;
+import msad.infra.AbstractEvent;
 
-//<<< EDA / CQRS
-@Entity
-@Table(name = "AdStatus_table")
 @Data
-public class AdStatus {
+public class Approved extends AbstractEvent {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-
-    private Long materialId;
     private String materialName;
     private String materialUrl;
-    private Long adId;
-    private String adStatus;
     private String title;
     private String content;
     private Long budget;
     private String target;
     private Long targetImpressions;
-    private String deliveryStatus;
+    private String status;
     private Date startDate;
     private Date endDate;
+    private Long materialId;
 }

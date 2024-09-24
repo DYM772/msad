@@ -10,4 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
     path = "deliveries"
 )
 public interface DeliveryRepository
-    extends PagingAndSortingRepository<Delivery, Long> {}
+    extends PagingAndSortingRepository<Delivery, Long> {
+
+    Delivery findByAdId(Long adId);}

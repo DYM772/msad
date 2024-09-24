@@ -18,8 +18,6 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long adId;
-
     private String target;
 
     private Long inventory;
@@ -28,10 +26,7 @@ public class Inventory {
     public void onPostPersist() {}
 
     @PostUpdate
-    public void onPostUpdate() {
-        Canceled canceled = new Canceled(this);
-        canceled.publishAfterCommit();
-    }
+    public void onPostUpdate() {}
 
     public static InventoryRepository repository() {
         InventoryRepository inventoryRepository = InventoryApplication.applicationContext.getBean(
@@ -47,25 +42,17 @@ public class Inventory {
 
     //<<< Clean Arch / Port Method
     public static void subtract(Fed fed) {
-        //implement business logic here:
+        Inventory inventory = repository().findByTarget(fed.getTarget());
+        Long targetImpressions = fed.getTargetImpressions();
+        Long availableInventory = inventory.getInventory();
 
-        /** Example 1:  new item 
-        Inventory inventory = new Inventory();
-        repository().save(inventory);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(fed.get???()).ifPresent(inventory->{
-            
-            inventory // do something
-            repository().save(inventory);
-
-
-         });
-        */
-
+        if(targetImpressions > availableInventory) {
+            Canceled canceled = new Canceled(inventory);
+            canceled.setAdId(fed.getAdId());
+            canceled.publishAfterCommit();
+        } else{
+            inventory.setInventory(availableInventory - targetImpressions);
+        }
     }
     //>>> Clean Arch / Port Method
 
