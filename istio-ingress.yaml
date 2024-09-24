@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: "Ingress"
 metadata: 
-  name: "msad-ingress"
+  name: "istio-ingress"
   namespace: istio-system
   annotations: 
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -12,41 +12,6 @@ spec:
     - host: ""
       http: 
         paths:
-          - path: /materials
-            pathType: Prefix
-            backend: 
-              service:
-                name: material
-                port:
-                  number: 8080
-          - path: /advertisements
-            pathType: Prefix
-            backend: 
-              service:
-                name: advertisement
-                port:
-                  number: 8080
-          - path: /deliveries
-            pathType: Prefix
-            backend: 
-              service:
-                name: delivery
-                port:
-                  number: 8080
-          - path: /inventories
-            pathType: Prefix
-            backend: 
-              service:
-                name: inventory
-                port:
-                  number: 8080
-          - path: /adStatuses
-            pathType: Prefix
-            backend: 
-              service:
-                name: ad-status
-                port:
-                  number: 8080
           - path: /jaeger
             pathType: Prefix
             backend: 
