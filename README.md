@@ -1,96 +1,25 @@
-# 
+# MSAD
+* 광고 플랫폼에서 발생하는 시나리오를 바탕으로 이벤트 스토밍
+* 광고 플랫폼의 서비스를 분리하여 MSA 설계
+* 클라우드 환경에서 애플리케이션 개발
 
-## Model
-www.msaez.io/#/71246187/storming/msad
+## 아키텍처 설계
+### 아키텍처 구성도
 
-## Before Running Services
-### Make sure there is a Kafka server running
-```
-cd kafka
-docker-compose up
-```
-- Check the Kafka messages:
-```
-cd infra
-docker-compose exec -it kafka /bin/bash
-cd /bin
-./kafka-console-consumer --bootstrap-server localhost:9092 --topic
-```
+## 서비스 분리/설계
+### 이벤트 스토밍
 
-## Run the backend micro-services
-See the README.md files inside the each microservices directory:
+## MSA 구현
+### SAGA 패턴
+### 보상 트랜잭션
+### CQRS 패턴
 
-- material
-- advertisement
-- inventory
-- delivery
-- ad status
+## 클라우드 배포(K8s)
+### CI/CD Pipeline
 
-
-## Run API Gateway (Spring Gateway)
-```
-cd gateway
-mvn spring-boot:run
-```
-
-## Test by API
-- material
-```
- http :8088/materials id="id" name="name" type="type" size="size" url="url" 
-```
-- advertisement
-```
- http :8088/advertisements id="id" materialId="materialId" materialName="materialName" materialUrl="materialUrl" title="title" content="content" budget="budget" target="target" targetImpressions="targetImpressions" status="status" startDate="startDate" endDate="endDate" 
-```
-- inventory
-```
- http :8088/inventories id="id" adId="adId" target="target" inventory="inventory" 
-```
-- delivery
-```
- http :8088/deliveries id="id" adId="adId" materialId="materialId" materialName="materialName" materialUrl="materialUrl" target="target" startDate="startDate" endDate="endDate" status="status" 
-```
-- ad status
-```
-```
-
-
-## Run the frontend
-```
-cd frontend
-npm i
-npm run serve
-```
-
-## Test by UI
-Open a browser to localhost:8088
-
-## Required Utilities
-
-- httpie (alternative for curl / POSTMAN) and network utils
-```
-sudo apt-get update
-sudo apt-get install net-tools
-sudo apt install iputils-ping
-pip install httpie
-```
-
-- kubernetes utilities (kubectl)
-```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
-
-- aws cli (aws)
-```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-
-- eksctl 
-```
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-```
-
+## 클라우드 DevOps
+### Auto Scaling
+### ConfigMap
+### PVC
+### Liveness/Rediness Probe
+### Loggregation/Monitoring
