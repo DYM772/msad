@@ -44,30 +44,6 @@ public class AdStatusViewHandler {
         }
     }
 
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void when_then_UPDATE_(@Payload  ) {
-        try {
-            if (!.validate()) return;
-                // view 객체 조회
-
-                List<AdStatus> adStatusList = adStatusRepository.findByAdId(.getId());
-                for(AdStatus adStatus : adStatusList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    adStatus.setAdStatus(.getStatus());
-                    adStatus.setTitle(.getTitle());
-                    adStatus.setContent(.getContent());
-                    adStatus.setBudget(.getBudget());
-                    adStatus.setTargetImpressions(.getTargetImpressions());
-                    adStatus.set();
-                // view 레파지 토리에 save
-                adStatusRepository.save(adStatus);
-                }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     @StreamListener(KafkaProcessor.INPUT)
     public void whenFed_then_UPDATE_2(@Payload Fed fed) {
         try {
@@ -80,7 +56,6 @@ public class AdStatusViewHandler {
                     adStatus.setDeliveryStatus(fed.getStatus());
                     adStatus.setStartDate(fed.getStartDate());
                     adStatus.setEndDate(fed.getEndDate());
-                    adStatus.setImpressions(fed.getImpressions());
                 // view 레파지 토리에 save
                 adStatusRepository.save(adStatus);
                 }
@@ -101,25 +76,6 @@ public class AdStatusViewHandler {
                     adStatus.setDeliveryStatus(stoped.getStatus());
                     adStatus.setStartDate(stoped.getStartDate());
                     adStatus.setEndDate(stoped.getEndDate());
-                    adStatus.setImpressions(stoped.getImpressions());
-                // view 레파지 토리에 save
-                adStatusRepository.save(adStatus);
-                }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void when_then_UPDATE_(@Payload  ) {
-        try {
-            if (!.validate()) return;
-                // view 객체 조회
-
-                List<AdStatus> adStatusList = adStatusRepository.findByAdId(.getAdId());
-                for(AdStatus adStatus : adStatusList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    adStatus.setImpressions(.getImpressions());
                 // view 레파지 토리에 save
                 adStatusRepository.save(adStatus);
                 }
