@@ -19,5 +19,13 @@ public class AdvertisementController {
 
     @Autowired
     AdvertisementRepository advertisementRepository;
+
+    @PatchMapping("/advertisements/approval/{adId}")
+    public void approve(@PathVariable Long adId) throws Exception {
+        Advertisement advertisement = advertisementRepository.findById(adId).orElseThrow(() -> new Exception());
+        advertisement.setStatus("RUNNING");
+        Approved approved = new Approved(advertisement);
+        approved.publishAfterCommit();
+    }
 }
 //>>> Clean Arch / Inbound Adaptor

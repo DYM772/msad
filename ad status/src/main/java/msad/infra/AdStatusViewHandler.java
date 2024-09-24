@@ -91,7 +91,6 @@ public class AdStatusViewHandler {
 
                 List<AdStatus> adStatusList = adStatusRepository.findByAdId(stopped.getAdId());
                 for(AdStatus adStatus : adStatusList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
                     adStatus.setDeliveryStatus(stopped.getStatus());
                 // view 레파지 토리에 save
                 adStatusRepository.save(adStatus);

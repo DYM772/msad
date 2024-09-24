@@ -50,8 +50,6 @@ public class Advertisement {
 
     @PostUpdate
     public void onPostUpdate() {
-        Approved approved = new Approved(this);
-        approved.publishAfterCommit();
     }
 
     public static AdvertisementRepository repository() {
