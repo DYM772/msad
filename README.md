@@ -6,6 +6,62 @@
 ## 아키텍처 설계
 ### 아키텍처 구성도
 
+```mermaid
+graph TD
+    User((사용자))
+    
+    subgraph Kubernetes Cluster
+        IC[Ingress Controller]
+        
+        subgraph Microservices
+            MS1[Material 서비스]
+            MS2[Advertisement 서비스]
+            MS3[Delivery 서비스]
+            MS4[Inventory 서비스]
+            MS5[Ad Status 서비스]
+        end
+        
+        Kafka{Kafka}
+        
+        DB1[(Material DB)]
+        DB2[(Advertisement DB)]
+        DB3[(Delivery DB)]
+        DB4[(Inventory DB)]
+        DB5[(Ad Status DB)]
+    end
+    
+    User --> IC
+    IC --> MS1
+    IC --> MS2
+    IC --> MS3
+    IC --> MS4
+    IC --> MS5
+    
+    MS1 <--> DB1
+    MS2 <--> DB2
+    MS3 <--> DB3
+    MS4 <--> DB4
+    MS5 <--> DB5
+    
+    MS1 <--> Kafka
+    MS2 <--> Kafka
+    MS3 <--> Kafka
+    MS4 <--> Kafka
+    MS5 <--> Kafka
+
+    classDef k8s fill:#326CE5,color:#fff,stroke:#fff,stroke-width:2px;
+    class IC,Kubernetes k8s;
+    
+    classDef microservice fill:#f9f,stroke:#333,stroke-width:2px;
+    class MS1,MS2,MS3,MS4,MS5 microservice;
+    
+    classDef database fill:#bdf,stroke:#333,stroke-width:2px;
+    class DB1,DB2,DB3,DB4,DB5 database;
+    
+    classDef kafka fill:#fd9,stroke:#333,stroke-width:2px;
+    class Kafka kafka;
+```
+
 ## 서비스 분리/설계
 ### 이벤트 스토밍
 ![eventstorming](https://github.com/user-attachments/assets/ddfb057f-bf8c-4352-8e96-57fca7f8bd73)
@@ -520,7 +576,7 @@ spec:
 
 ![SM2](https://github.com/user-attachments/assets/724139e5-8eb8-4573-90d1-d2606a63ea7a)
 
-### Loggregation/Monitoring
+### Observability/Monitoring
 - kiali
 
 ![kiali](https://github.com/user-attachments/assets/7397dd1a-b9e0-4bd9-bf78-566b98bc2789)
