@@ -47,3 +47,10 @@ spec:
                 name: loki
                 port:
                   number: 3100
+          - path: /zipkin
+            pathType: Prefix
+            backend: 
+              service:
+                name: zipkin
+                port:
+                  number: 9411
