@@ -644,14 +644,14 @@ spec:
           ports:
             - containerPort: 8080
           ...
-          livenessProbe:         //Readiness Probe 설정
+          readinessProbe:        //Readiness Probe 설정
             httpGet:
               path: '/actuator/health'
               port: 8080
-            initialDelaySeconds: 120
+            initialDelaySeconds: 15
             timeoutSeconds: 2
             periodSeconds: 5
-            failureThreshold: 5
+            failureThreshold: 10
 ```
 2. 무정지 배포 확인
 
