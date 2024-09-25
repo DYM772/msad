@@ -3,6 +3,26 @@
 * 광고 플랫폼의 서비스를 분리하여 MSA 설계
 * 클라우드 환경에서 애플리케이션 개발
 
+# 목차
+- [MSAD](#msad)
+  - [아키텍처 설계](#아키텍처-설계)
+    - [아키텍처 구성도](#아키텍처-구성도)
+  - [서비스 분리/설계](#서비스-분리설계)
+    - [이벤트 스토밍](#이벤트-스토밍)
+  - [MSA 구현](#msa-구현)
+    - [SAGA 패턴](#saga-패턴)
+    - [보상 트랜잭션](#보상-트랜잭션)
+    - [게이트웨이](#게이트웨이)
+    - [CQRS 패턴](#cqrs-패턴)
+  - [클라우드 배포(K8s)](#클라우드-배포k8s)
+    - [CI/CD Pipeline](#cicd-pipeline)
+  - [클라우드 DevOps](#클라우드-devops)
+    - [Auto Scaling](#auto-scaling)
+    - [ConfigMap](#configmap)
+    - [Readiness Probe](#readiness-probe)
+    - [Service Mesh](#service-mesh)
+    - [Observability/Monitoring](#observabilitymonitoring)
+
 ## 아키텍처 설계
 ### 아키텍처 구성도
 
