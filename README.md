@@ -19,6 +19,7 @@
   - [클라우드 DevOps](#클라우드-devops)
     - [Auto Scaling](#auto-scaling)
     - [ConfigMap](#configmap)
+    - [PVC](#pvc)
     - [Readiness Probe](#readiness-probe)
     - [Service Mesh](#service-mesh)
     - [Observability/Monitoring](#observabilitymonitoring)
@@ -348,7 +349,7 @@ graph TD
 </details>
 
 ### 게이트웨이
-Ingress를 사용하여 트래픽을 라우팅
+1. Ingress를 사용하여 트래픽을 라우팅
 ```
 apiVersion: networking.k8s.io/v1
 kind: "Ingress"
@@ -400,6 +401,8 @@ spec:
                 port:
                   number: 8080
 ```
+
+2. Nginx Ingress Controller 설치
 
 ![ingress](https://github.com/user-attachments/assets/ecb58481-2e1c-4344-802e-231ad2210bb3)
 
@@ -497,7 +500,7 @@ spec:
 
 ## 클라우드 DevOps
 ### Auto Scaling
-1. Auto Scaling 설정
+1. Horizontal Pod Autoscaling 생성
 ```
 kubectl autoscale deployment material --cpu-percent=50 --min=1 --max=3
 ```
@@ -515,7 +518,7 @@ kubectl autoscale deployment material --cpu-percent=50 --min=1 --max=3
 ```
 kubectl create configmap my-config --from-literal=class=MSA --from-literal=Lab=ConfigMap
 ```
-2. Pod에 ConfigMap 설정
+2. yaml 파일에서 ConfigMap 설정
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -539,7 +542,8 @@ spec:
           image: "user02.azurecr.io/material:latest"
           ports:
             - containerPort: 8080
-          env:  //ConfigMap 설정
+          ...
+          env:                     //ConfigMap 설정
             - name: CLASS
               valueFrom:
                 configMapKeyRef:
@@ -550,10 +554,86 @@ spec:
 
 ![CM](https://github.com/user-attachments/assets/b02a55e1-5753-44d7-b444-f87c96b26b6e)
 
+### PVC
+1. Persistent Volume Claim 생성
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurefile
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: azurefile
+  resources:
+    requests:
+      storage: 1Gi
+```
+2. yaml 파일에서 Volume 설정
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: material
+  labels:
+    app: material
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: material
+  template:
+    metadata:
+      labels:
+        app: material
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: material
+          image: "user02.azurecr.io/material:latest"
+          ports:
+            - containerPort: 8080
+          ...
+          volumeMounts:                //Volume 설정
+            - mountPath: "/mnt/data"
+              name: volume
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: azurefile  
+
+```
+3. Volume Mount 확인
+
+![pvc](https://github.com/user-attachments/assets/8cd2baca-4c68-4429-9739-b1f9230e2e10)
+
 ### Readiness Probe
 1. yaml 파일에서 Readiness Probe 설정
 ```
-          livenessProbe:  //Readiness Probe 설정
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: material
+  labels:
+    app: material
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: material
+  template:
+    metadata:
+      labels:
+        app: material
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: material
+          image: "user02.azurecr.io/material:latest"
+          ports:
+            - containerPort: 8080
+          ...
+          livenessProbe:         //Readiness Probe 설정
             httpGet:
               path: '/actuator/health'
               port: 8080
@@ -584,7 +664,7 @@ spec:
     metadata:
       labels:
         app: material
-        sidecar.istio.io/inject: "true" //sidecar로 istio envoy를 injection
+        sidecar.istio.io/inject: "true"    //sidecar로 istio envoy를 injection
     spec:
       containers:
         - name: material
