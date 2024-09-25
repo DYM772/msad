@@ -44,12 +44,13 @@ graph TD
         
         Kafka{Kafka}
         
-        DB1[(Material DB)]
-        DB2[(Advertisement DB)]
-        DB3[(Delivery DB)]
-        DB4[(Inventory DB)]
-        DB5[(Ad Status DB)]
     end
+
+    DB1[(Material DB)]
+    DB2[(Advertisement DB)]
+    DB3[(Delivery DB)]
+    DB4[(Inventory DB)]
+    DB5[(Ad Status DB)]
     
     User --> IC
     IC --> MS1
