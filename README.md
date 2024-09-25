@@ -14,7 +14,7 @@
     - [보상 트랜잭션](#보상-트랜잭션)
     - [게이트웨이](#게이트웨이)
     - [CQRS 패턴](#cqrs-패턴)
-  - [클라우드 배포(K8s)](#클라우드-배포k8s)
+  - [클라우드 배포(k8s)](#클라우드-배포k8s)
     - [CI/CD Pipeline](#cicd-pipeline)
   - [클라우드 DevOps](#클라우드-devops)
     - [Auto Scaling](#auto-scaling)
@@ -485,14 +485,20 @@ spec:
 ```
 </details>
 
-## 클라우드 배포(K8s)
+## 클라우드 배포(k8s)
 ### CI/CD Pipeline
 - CI
+  1. maven build
+  2. k8s yaml 파일을 아티팩트 작업 폴더에 저장
+  3. 아티팩트 작업 폴더의 파일들을 릴리즈에서 사용할 아티팩트로 저장
+  4. docker build and push
 
 ![CI1](https://github.com/user-attachments/assets/bb547698-f58f-4acc-bd25-3e7af69e56dd)
 ![CI2](https://github.com/user-attachments/assets/ad52e6cc-b65f-4ece-acd9-bf028a3e332d)
 
 - CD
+  1. deployment.yaml 파일의 latest 버전을 build id로 변경
+  2. deployment.yaml, service.yaml 파일로 k8s object 생성
 
 ![CD1](https://github.com/user-attachments/assets/c729ab33-5331-458c-9cd4-a1383acdca22)
 ![CD2](https://github.com/user-attachments/assets/32561e72-5366-478e-8674-46c0d9005363)
@@ -506,7 +512,7 @@ kubectl autoscale deployment material --cpu-percent=50 --min=1 --max=3
 ```
 2. 부하 테스트 실행
 
-![HPA](https://github.com/user-attachments/assets/504f98f0-e5f8-41d4-b660-29ac1f3cecd7)
+![hpa](https://github.com/user-attachments/assets/a80dd379-5ddd-4f2b-a990-2511c77b5e39)
 
 3. Auto Scaling 실행
 
