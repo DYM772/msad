@@ -30,27 +30,31 @@
 ```mermaid
 graph TD
     User((사용자))
-    
-    subgraph Kubernetes Cluster
-        IC[Ingress Controller]
-        
-        subgraph Microservices
-            MS1[Material 서비스]
-            MS2[Advertisement 서비스]
-            MS3[Delivery 서비스]
-            MS4[Inventory 서비스]
-            MS5[Ad Status 서비스]
-        end
-        
-        Kafka{Kafka}
-        
-    end
 
-    DB1[(Material DB)]
-    DB2[(Advertisement DB)]
-    DB3[(Delivery DB)]
-    DB4[(Inventory DB)]
-    DB5[(Ad Status DB)]
+    subgraph Azure
+
+        subgraph Kubernetes Cluster
+            IC[Ingress Controller]
+            
+            subgraph Microservices
+                MS1[Material 서비스]
+                MS2[Advertisement 서비스]
+                MS3[Delivery 서비스]
+                MS4[Inventory 서비스]
+                MS5[Ad Status 서비스]
+            end
+            
+            Kafka{Kafka}
+            
+        end
+    
+        DB1[(Material DB)]
+        DB2[(Advertisement DB)]
+        DB3[(Delivery DB)]
+        DB4[(Inventory DB)]
+        DB5[(Ad Status DB)]
+
+    end
     
     User --> IC
     IC --> MS1
